@@ -1,9 +1,15 @@
 // Setup basic express server
 const express = require('express');
+const {useAzureSocketIO} = require('@azure/web-pubsub-socket.io');
 const app = express();
 const path = require('path');
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
+const opts = {
+  hub: "Hub",
+  connectionString: process.argv[2],
+}
+useAzureSocketIO(io, opts);
 const port = process.env.PORT || 3000;
 
 server.listen(port, () => {
